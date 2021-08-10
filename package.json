@@ -1,6 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "description": "This server provides an API for the client side",
   "main": "src/server.js",
   "scripts": {
