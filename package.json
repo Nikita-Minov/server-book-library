@@ -1,0 +1,50 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "This server provides an API for the client side",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint  --fix src/**/*.js",
+    "format": "prettier src/**/*.js --write. --config ./.prettierrc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikita-Minov/server-book-library.git"
+  },
+  "keywords": [
+    "server",
+    "express",
+    "api"
+  ],
+  "author": "Nikita Minov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nikita-Minov/server-book-library/issues"
+  },
+  "homepage": "https://github.com/Nikita-Minov/server-book-library#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.25.0",
+    "aws-sdk": "^2.963.0",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.12.3",
+    "multer": "^1.4.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  }
+}
