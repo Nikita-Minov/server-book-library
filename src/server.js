@@ -14,7 +14,7 @@ const userRouter = require('./routes/user-router');
 const bookRouter = require('./routes/book-router');
 
 const corsOptions = {
-  origin: false,
+  origin: '*',
 }
 
 passport.use(new LocalStrategy(

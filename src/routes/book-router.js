@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-router.post('/api/add-book', upload.single('pdf'), async (req, res) => {)
+router.post('/api/add-book', upload.single('pdf'), async (req, res) => {
   const link = await uploadToAws.uploadFileToCloud(req.file.originalname, req.user.userId);
   console.log(link)
   const book = new Book({
