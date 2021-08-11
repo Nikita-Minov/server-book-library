@@ -15,7 +15,6 @@ const bookRouter = require('./routes/book-router');
 
 const corsOptions = {
   origin: 'https://still-waters-66948.herokuapp.com',
-  credentials: true,
   optionSuccessStatus: 200
 }
 
