@@ -13,9 +13,9 @@ const dotenv = require('dotenv').config();
 const userRouter = require('./routes/user-router');
 const bookRouter = require('./routes/book-router');
 
-const corsOptions = {
-  origin: '*',
-}
+// const corsOptions = {
+//   origin: '*',
+// }
 
 passport.use(new LocalStrategy(
   function (username, password, cb) {
@@ -56,16 +56,16 @@ passport.deserializeUser(function (userId, done) {
 });
 
 const app = express();
-app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
-
+g
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cors());
 app.use(userRouter);
 app.use(bookRouter);
 mongoose.connect(process.env.DBURL, {useNewUrlParser: true, useUnifiedTopology: true});
