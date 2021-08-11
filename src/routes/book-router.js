@@ -17,6 +17,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 router.post('/api/add-book', upload.single('pdf'), async (req, res) => {
+  res.set({
+    'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+  })
   const link = await uploadToAws.uploadFileToCloud(req.file.originalname, req.user.userId);
   console.log(link)
   const book = new Book({
@@ -32,17 +35,26 @@ router.post('/api/add-book', upload.single('pdf'), async (req, res) => {
 })
 
 router.get('/api/get-books', (req, res) => {
+  res.set({
+    'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+  })
   Book.find().then((data) => res.json({items: data}))
     .catch((err) => console.log(err));
 })
 
 router.post('/api/user-books', (req, res) => {
+  res.set({
+    'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+  })
   if (req.body.id === 0) return res.status(200);
   Book.find({creator: req.body.id}).then((data) => res.json({items: data}))
     .catch((err) => console.log(err));
 })
 
 router.post('/api/delete-book', (req, res) => {
+  res.set({
+    'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+  })
   Book.findOneAndDelete({idBook: req.body.id})
     .then(() => res.status(200).json({message: 'Successful! Book deleted!'}))
     .catch((err) => console.log(err));
