@@ -49,13 +49,7 @@ router.get('/api/me', function (req, res) {
 
 router.get('/api/logout', function (req, res) {
   req.logout();
-  req.session.destroy(function (err) {
-    if (!err) {
-      res.status(200).clearCookie('connect.sid', {path: '/'}).json({message: "Successful logout!"});
-    } else {
-      console.log('Error with logout!')
-    }
-  });
+  res.status(200).clearCookie('connect.sid', {path: '/'}).json({message: "Successful logout!"});
   console.log(req.user);
 });
 
