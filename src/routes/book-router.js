@@ -38,7 +38,7 @@ router.post('/api/add-book', upload.single('pdf'), async (req, res) => {
 router.get('/api/get-books', (req, res) => {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
-    'Access-Control-Allow-Credentials': true
+    'Access-Control-Allow-Credentials': 'true'
   })
   Book.find().then((data) => res.json({items: data}))
     .catch((err) => console.log(err));
@@ -47,7 +47,7 @@ router.get('/api/get-books', (req, res) => {
 router.post('/api/user-books', (req, res) => {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
-    'Access-Control-Allow-Credentials': true
+    'Access-Control-Allow-Credentials': 'true'
   })
   if (req.body.id === 0) return res.status(200);
   Book.find({creator: req.body.id}).then((data) => res.json({items: data}))
@@ -57,7 +57,7 @@ router.post('/api/user-books', (req, res) => {
 router.post('/api/delete-book', (req, res) => {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
-    'Access-Control-Allow-Credentials': true
+    'Access-Control-Allow-Credentials': 'true'
   })
   Book.findOneAndDelete({idBook: req.body.id})
     .then(() => res.status(200).json({message: 'Successful! Book deleted!'}))

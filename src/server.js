@@ -13,12 +13,12 @@ const dotenv = require('dotenv').config();
 const userRouter = require('./routes/user-router');
 const bookRouter = require('./routes/book-router');
 
-// const corsOptions = {
-//   origin: 'https://still-waters-66948.herokuapp.com',
-//   credentials: true,
-//   optionSuccessStatus: 200
-// }
-//
+const corsOptions = {
+  origin: 'https://still-waters-66948.herokuapp.com',
+  credentials: true,
+  optionSuccessStatus: 200
+}
+
 passport.use(new LocalStrategy(
   function (username, password, cb) {
     console.log(username, password)
@@ -58,7 +58,7 @@ passport.deserializeUser(function (userId, done) {
 });
 
 const app = express();
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
