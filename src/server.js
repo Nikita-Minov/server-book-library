@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+// const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
@@ -13,12 +13,12 @@ const dotenv = require('dotenv').config();
 const userRouter = require('./routes/user-router');
 const bookRouter = require('./routes/book-router');
 
-const corsOptions = {
-  origin: 'https://still-waters-66948.herokuapp.com',
-  credentials: true,
-  optionSuccessStatus: 200
-}
-
+// const corsOptions = {
+//   origin: 'https://still-waters-66948.herokuapp.com',
+//   credentials: true,
+//   optionSuccessStatus: 200
+// }
+//
 passport.use(new LocalStrategy(
   function (username, password, cb) {
     console.log(username, password)

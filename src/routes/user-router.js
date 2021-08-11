@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/api/register-account', async(req, res) => {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+    'Access-Control-Allow-Credentials': true
   })
   const user = new User({username: req.body.username, password: req.body.password, userId: bookId.randomId()})
   const userIsFinded = await User.find({username: req.body.username});
@@ -19,6 +20,7 @@ router.post('/api/register-account', async(req, res) => {
 router.post('/api/login', function (req, res, next) {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+    'Access-Control-Allow-Credentials': true
   })
   passport.authenticate('local', function (err, user) {
     console.log(user);
@@ -42,6 +44,7 @@ router.post('/api/login', function (req, res, next) {
 router.get('/api/me', function (req, res) {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+    'Access-Control-Allow-Credentials': true
   })
   if (req.user == null) {
     res.json({
@@ -59,6 +62,7 @@ router.get('/api/me', function (req, res) {
 router.get('/api/logout', function (req, res) {
   res.set({
     'Access-Control-Allow-Origin': 'https://still-waters-66948.herokuapp.com',
+    'Access-Control-Allow-Credentials': true
   })
   req.logout();
   res.status(200).clearCookie('connect.sid', {path: '/'}).json({message: "Successful logout!"});
