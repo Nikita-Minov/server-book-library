@@ -59,7 +59,7 @@ passport.deserializeUser(function (userId, done) {
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://still-waters-66948.herokuapp.com/',
   credentials: true
 }));
 app.use(cookieParser());
