@@ -59,6 +59,7 @@ passport.deserializeUser(function (userId, done) {
 });
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(cors({
   origin: 'https://still-waters-66948.herokuapp.com',
   credentials: true
@@ -76,6 +77,10 @@ app.use(session({
   store:  MongoStore.create({
     mongoUrl: process.env.DBURL, // See below for details
   }),
+  cookie: {
+    sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
+    secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+  }
 }))
 app.use(passport.initialize());
 app.use(passport.session());
