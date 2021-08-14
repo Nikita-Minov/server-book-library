@@ -71,6 +71,7 @@ app.use(session({
   secret: 'express secret',
   maxAge: 1000 * 3600 * 24,
   saveUninitialized: true,
+  proxy: true,
   resave: true,
   store:  MongoStore.create({
     mongoUrl: process.env.DBURL, // See below for details
