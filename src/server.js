@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User.js');
-const session = require('cookie-session');
+const session = require('express-session');
 const dotenv = require('dotenv').config();
 
 // Routes
