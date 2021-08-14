@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
@@ -58,13 +58,10 @@ passport.deserializeUser(function (userId, done) {
 });
 
 const app = express();
-app.use(function(req, res, next) {
-  res.set("Access-Control-Allow-Origin", '*');
-  res.set("Access-Control-Allow-Credentials", false);
-  res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.set("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, content-type, application/json');
-  next();
-});
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -73,7 +70,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.urlencoded({extended: false}));
-// app.use(cors(corsOptions));
+
 app.use(userRouter);
 app.use(bookRouter);
 mongoose.connect(process.env.DBURL, {useNewUrlParser: true, useUnifiedTopology: true});
