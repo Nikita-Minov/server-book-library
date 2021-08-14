@@ -65,7 +65,15 @@ app.use(cors({
 app.use(cookieParser('keyboard cat'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(session({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
+app.use(session({
+  secret : 'somesecret',
+  key : 'sid',
+  proxy : true, // add this when behind a reverse proxy, if you need secure cookies
+  cookie : {
+    secure : true,
+    maxAge: 5184000000 // 2 months
+  }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
