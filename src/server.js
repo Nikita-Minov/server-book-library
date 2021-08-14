@@ -59,7 +59,6 @@ passport.deserializeUser(function (userId, done) {
 });
 
 const app = express();
-app.set("trust proxy", 1);
 app.use(cors({
   origin: 'https://still-waters-66948.herokuapp.com',
   credentials: true
