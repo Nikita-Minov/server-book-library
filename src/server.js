@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User.js');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv').config();
 
 // Routes
@@ -66,14 +67,15 @@ app.use(cookieParser('keyboard cat'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(session({
-  secret : 'somesecret',
-  key : 'sid',
-  proxy : true, // add this when behind a reverse proxy, if you need secure cookies
-  cookie : {
-    secure : true,
-    maxAge: 5184000000 // 2 months
-  }
-}));
+  name: "server-session-cookie-id",
+  secret: 'express secret',
+  maxAge: 1000 * 3600 * 24,
+  saveUninitialized: true,
+  resave: true,
+  store:  MongoStore.create({
+    mongoUrl: process.env.DBURL, // See below for details
+  }),
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 
