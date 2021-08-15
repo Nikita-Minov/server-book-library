@@ -4,7 +4,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User.js');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -15,34 +14,6 @@ const filePathMiddleware = require('./middleware/filePath.middleware');
 const userRouter = require('./routes/user-router');
 const bookRouter = require('./routes/book-router');
 const path = require("path");
-
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-//   credentials: true,
-//   optionsSuccessStatus: 200
-// }
-
-passport.use(new LocalStrategy(
-  function (username, password, cb) {
-    console.log(username, password)
-    User.findOne({username}, function (err, user) {
-      if (err) {
-        return cb(err);
-      }
-      if (!user) {
-        console.log('Invalid username')
-        return cb(null, false);
-      }
-      if (user.password != password) {
-        console.log(user.password);
-        console.log(password);
-        console.log('Invalid password');
-        return cb(null, false);
-      }
-      return cb(null, user);
-    });
-  }));
-
 
 passport.serializeUser(function (user, done) {
   done(null, user.userId);
@@ -62,7 +33,7 @@ passport.deserializeUser(function (userId, done) {
 
 const app = express();
 app.use(cors({
-  origin: 'https://still-waters-66948.herokuapp.com',
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(cookieParser('express secret'));
