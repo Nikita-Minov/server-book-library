@@ -4,6 +4,7 @@ const bookId = require("../utils/randomId.js");
 const router = express.Router();
 const multer = require('multer');
 const uploadToAws = require('../utils/uploadToAws');
+const {deleteFileFromCloud} = require("../utils/deleteFileFromAws");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,12 +26,24 @@ router.post('/api/add-book', upload.single('pdf'), async (req, res) => {
     author: req.body.author,
     idBook: bookId.randomId(),
     creator: req.user.userId,
-    link: link
+    link: link,
+    fileName: req.file.originalname
   })
   console.log({body: req.body, file: req.file})
   book.save().then(() => res.send('Successful! Book saved!'))
     .catch((err) => console.log(err));
 })
+
+router.post('/api/delete-book', async (req, res) => {
+  const findBook = await Book.find({idBook: req.body.idBook})
+  console.log(findBook)
+  await deleteFileFromCloud(findBook[0].fileName, findBook[0].creator)
+  await Book.findOneAndDelete({idBook: req.body.idBook}, (err) => {
+    if(err) console.log(err);
+    res.json({message: 'Book succesfull deleted!'})
+  });
+})
+
 
 router.get('/api/get-books', (req, res) => {
   Book.find().then((data) => res.json({items: data}))
@@ -42,11 +55,4 @@ router.post('/api/user-books', (req, res) => {
   Book.find({creator: req.body.id}).then((data) => res.json({items: data}))
     .catch((err) => console.log(err));
 })
-
-router.post('/api/delete-book', (req, res) => {
-  Book.findOneAndDelete({idBook: req.body.id})
-    .then(() => res.status(200).json({message: 'Successful! Book deleted!'}))
-    .catch((err) => console.log(err));
-})
-
 module.exports = router
