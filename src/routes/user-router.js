@@ -34,6 +34,7 @@ router.post('/api/login', function (req, res, next) {
 });
 
 router.get('/api/me', function (req, res) {
+  console.log(req.filePath);
   if (req.user == null) {
     res.json({
       message: 'User is not found!'
