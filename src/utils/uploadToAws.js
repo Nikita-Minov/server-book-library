@@ -1,5 +1,6 @@
 const { S3 } = require("@aws-sdk/client-s3");
 const fs = require("fs");
+const path = require("path");
 
 const s3 = new S3({
   region: process.env.REGION,
@@ -9,8 +10,8 @@ const s3 = new S3({
   },
 });
 
-exports.uploadFileToCloud = async (fileName, userId) => {
-  const filePath = './uploads/' + fileName;
+exports.uploadFileToCloud = async (fileName, userId, dirPath) => {
+  const filePath = dirPath + '/uploads/' + fileName;
   const fileStream = fs.createReadStream(filePath);
 
   const myBucket = process.env.BUCKETNAME;

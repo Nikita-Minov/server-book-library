@@ -9,10 +9,12 @@ const User = require('./models/User.js');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv').config();
+const filePathMiddleware = require('./middleware/filePath.middleware');
 
 // Routes
 const userRouter = require('./routes/user-router');
 const bookRouter = require('./routes/book-router');
+const path = require("path");
 
 // const corsOptions = {
 //   origin: 'http://localhost:3000',
@@ -64,6 +66,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(cookieParser('express secret'));
+app.use(filePathMiddleware(path.resolve(__dirname)))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(session({
@@ -74,11 +77,11 @@ app.use(session({
   proxy: true,
   resave: true,
   store:  MongoStore.create({
-    mongoUrl: process.env.DBURL, // See below for details
+    mongoUrl: process.env.DBURL,
   }),
   cookie: {
-    sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
-    secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+    sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === "production",
   }
 }))
 app.use(passport.initialize());
