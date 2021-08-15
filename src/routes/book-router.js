@@ -44,7 +44,6 @@ router.post('/api/delete-book', async (req, res) => {
   });
 })
 
-
 router.get('/api/get-books', (req, res) => {
   Book.find().then((data) => res.json({items: data}))
     .catch((err) => console.log(err));
@@ -53,6 +52,11 @@ router.get('/api/get-books', (req, res) => {
 router.post('/api/user-books', (req, res) => {
   if (req.body.id === 0) return res.status(200);
   Book.find({creator: req.body.id}).then((data) => res.json({items: data}))
+    .catch((err) => console.log(err));
+})
+
+router.post('/api/get-book', async (req, res) => {
+  await Book.find({idBook: req.body.idBook}).then((data) => res.json({book: data[0]}))
     .catch((err) => console.log(err));
 })
 module.exports = router
